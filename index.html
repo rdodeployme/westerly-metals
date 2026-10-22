@@ -22,7 +22,7 @@
 <a class="sr" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
   <a class="brand" href="./" aria-label="Westerly Metals home"><img src="assets/brand/logo-dark.svg" alt="Westerly Metals" width="234" height="60"></a>
-  <nav class="nav" id="nav" aria-label="Main"><a href="savings.html">Savings</a><a href="what-we-take.html">What we take</a><a href="pickups.html">Pickups</a><a href="find-us.html">Find us</a></nav>
+  <nav class="nav" id="nav" aria-label="Main"><a class="m-only" href="./" aria-current=page>Home</a><a href="savings.html">Savings</a><a href="what-we-take.html">What we take</a><a href="pickups.html">Pickups</a><a href="find-us.html">Find us</a><div class="nav-extra"><a class="btn btn-amber" href="tel:0418524602"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>Call Sean 0418 524 602</a><span class="status" data-status><i></i><span>Open 6am to 6pm, 7 days</span></span><p>Atkinsons Road, Moorabool</p></div></nav>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   <div class="top-call"><a class="btn btn-amber" href="tel:0418524602"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg><span>Call<span class="long"> 0418 524 602</span></span></a></div>
 </div></header>
@@ -59,6 +59,7 @@
       <div class="stat"><div class="num">84<small>hrs</small></div><div class="cap">Open every week</div><div class="note">6am to 6pm, Monday to Sunday.</div></div>
       <div class="stat"><div class="num">7<small>days</small></div><div class="cap">Weekends included</div><div class="note">Saturday arvo and Sunday morning work too.</div></div>
     </div>
+    <p class="stats-foot">90&nbsp;km and about an hour per round trip compared with the Laverton North yards, from Warrnambool, Colac, Camperdown, Terang and most of the district. Times before traffic.</p>
   </div>
 </section>
 
@@ -118,6 +119,7 @@
             <tr><th scope="row">Total per round trip</th><td id="t-total">$85</td></tr>
           </tbody>
         </table>
+        <p class="small" id="o-route"></p>
         <p class="small">Road distances and drive times from OpenStreetMap routing, without traffic. West Melbourne traffic usually makes the Laverton trip longer still.</p>
         <p style="margin:18px 0 0"><a class="btn btn-line" href="savings.html#towns">Every town side by side</a></p>
       </div>
@@ -134,7 +136,7 @@
       </div>
       <p class="lead" style="color:#C9CDD0">Most scrap yards keep office hours and shut for the weekend. We open the gate at 6am and close it at 6pm, every day of the week.</p>
     </div>
-    <figure class="hours" style="margin:0"><figcaption class="hours-legend"><span><i class="k-us"></i>Westerly Metals, 6am to 6pm</span><span><i class="k-them"></i>A weekday-only yard, 7:30am to 4pm</span></figcaption><div class="hgrid"><div class="hday">Mon</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span><span class="hbar them" style="left:31.250%;width:35.417%"></span></div><div class="hday">Tue</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span><span class="hbar them" style="left:31.250%;width:35.417%"></span></div><div class="hday">Wed</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span><span class="hbar them" style="left:31.250%;width:35.417%"></span></div><div class="hday">Thu</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span><span class="hbar them" style="left:31.250%;width:35.417%"></span></div><div class="hday">Fri</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span><span class="hbar them" style="left:31.250%;width:35.417%"></span></div><div class="hday">Sat</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span></div><div class="hday">Sun</div><div class="htrack" role="presentation"><span class="hbar us" style="left:25.000%;width:50.000%"></span></div><div class="haxis" aria-hidden="true"><span style="left:25.000%">6am</span><span style="left:50.000%">12pm</span><span style="left:75.000%">6pm</span></div></div><div class="hours-sum"><span><b>84</b>hours a week open here</span><span class="them"><b>42.5</b>at a weekday-only yard</span></div></figure>
+    <figure class="hours" style="margin:0"><figcaption class="hours-legend"><span><i class="k-us"></i>Westerly Metals, 6am to 6pm</span><span><i class="k-them"></i>A weekday-only yard, 7:30am to 4pm</span></figcaption><div class="hgrid"><div class="hday">Mon</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span><span class="hbar them" style="left:21.875%;width:53.125%"></span></div><div class="hday">Tue</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span><span class="hbar them" style="left:21.875%;width:53.125%"></span></div><div class="hday">Wed</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span><span class="hbar them" style="left:21.875%;width:53.125%"></span></div><div class="hday">Thu</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span><span class="hbar them" style="left:21.875%;width:53.125%"></span></div><div class="hday">Fri</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span><span class="hbar them" style="left:21.875%;width:53.125%"></span></div><div class="hday">Sat</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span></div><div class="hday">Sun</div><div class="htrack" role="presentation"><span class="hbar us" style="left:12.500%;width:75.000%"></span></div><div class="haxis" aria-hidden="true"><span style="left:12.500%">6am</span><span style="left:50.000%">12pm</span><span style="left:87.500%">6pm</span></div></div><div class="hours-sum"><span><b>84</b>hours a week open here</span><span class="them"><b>42.5</b>at a weekday-only yard</span></div></figure>
   </div>
 </section>
 
@@ -213,11 +215,11 @@
         <dt>Call ahead</dt><dd>Sean <a href="tel:0418524602">0418&nbsp;524&nbsp;602</a></dd>
       </dl>
       <div class="btns" style="margin-top:28px">
-        <a class="btn btn-amber" href="https://www.google.com/maps/dir/?api=1&destination=Atkinsons+Road%2C+Moorabool+VIC+3213" target="_blank" rel="noopener">Directions</a>
+        <a class="btn btn-amber dir-btn" href="https://www.google.com/maps/dir/?api=1&destination=Atkinsons+Road%2C+Moorabool+VIC+3213" target="_blank" rel="noopener">Directions</a>
         <a class="btn btn-line" href="find-us.html">FAQ and contact</a>
       </div>
     </div>
-    <div class="map"><iframe title="Map: Atkinsons Road, Moorabool" loading="lazy" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=144.205%2C-38.062%2C144.31%2C-38.002&amp;layer=mapnik&amp;marker=-38.0322%2C144.2577"></iframe></div>
+    <div class="map"><iframe title="Map: Atkinsons Road, Moorabool" loading="lazy" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=144.205%2C-38.062%2C144.31%2C-38.002&amp;layer=mapnik&amp;marker=-38.0322%2C144.2577"></iframe><a class="map-open btn btn-amber" href="https://www.google.com/maps/dir/?api=1&destination=Atkinsons+Road%2C+Moorabool+VIC+3213" target="_blank" rel="noopener">Open in Google Maps</a></div>
   </div>
 </section>
 </main>
@@ -225,7 +227,7 @@
 <footer class="foot"><div class="wrap">
   <div class="foot-grid">
     <div><img src="assets/brand/logo-dark.svg" alt="Westerly Metals" width="234" height="60"><p style="margin:0;max-width:34ch">Scrap metal drop-off and pickups for the Western District. Closer than Melbourne, open 6am to 6pm, 7&nbsp;days.</p></div>
-    <div><h4>Visit</h4><ul><li>Nunjara Recycling site</li><li>Atkinsons Road</li><li>Moorabool VIC&nbsp;3213</li><li><a href="https://www.google.com/maps/dir/?api=1&destination=Atkinsons+Road%2C+Moorabool+VIC+3213" target="_blank" rel="noopener">Directions</a></li></ul></div>
+    <div><h4>Visit</h4><ul><li class="nw">Nunjara Recycling site</li><li>Atkinsons Road</li><li>Moorabool VIC&nbsp;3213</li><li><a href="https://www.google.com/maps/dir/?api=1&destination=Atkinsons+Road%2C+Moorabool+VIC+3213" target="_blank" rel="noopener">Directions</a></li></ul></div>
     <div><h4>Call ahead</h4><ul><li>Sean Woods</li><li><a href="tel:0418524602">0418 524 602</a></li><li><a href="mailto:sean@nunjara.com">sean@nunjara.com</a></li><li>6am to 6pm, 7&nbsp;days</li></ul></div>
     <div><h4>Pages</h4><ul><li><a href="./">Home</a></li><li><a href="savings.html">Savings</a></li><li><a href="what-we-take.html">What we take</a></li><li><a href="pickups.html">Pickups</a></li><li><a href="find-us.html">Find us</a></li></ul></div>
   </div>

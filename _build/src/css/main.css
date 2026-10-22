@@ -37,7 +37,8 @@ p{max-width:68ch}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.98;margin:0}
-h1{font-size:clamp(46px,8.4vw,112px);max-width:14ch}
+h1{font-size:clamp(40px,8.4vw,112px);max-width:14ch}
+[id]{scroll-margin-top:88px}
 h2.h-wide{max-width:24ch}
 h2{font-size:clamp(34px,5vw,64px);max-width:18ch}
 h3{font-size:clamp(24px,2.4vw,30px);line-height:1.05}
@@ -142,7 +143,7 @@ h3{font-size:clamp(24px,2.4vw,30px);line-height:1.05}
 .k-us{background:var(--amber)} .k-them{background:var(--steel-2)}
 .hgrid{display:grid;grid-template-columns:52px minmax(0,1fr);row-gap:10px;align-items:center}
 .hday{font:700 16px/1 var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--mist)}
-.htrack{position:relative;height:42px;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/24 - 1px),rgba(255,255,255,.06) calc(100%/24 - 1px) calc(100%/24));border-radius:3px}
+.htrack{position:relative;height:42px;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/16 - 1px),rgba(255,255,255,.06) calc(100%/16 - 1px) calc(100%/16));border-radius:3px}
 .hbar{position:absolute;height:18px;border-radius:2px}
 .hbar.us{top:2px;background:var(--amber)}
 .hbar.them{bottom:2px;background:var(--steel-2)}
@@ -339,5 +340,166 @@ textarea{min-height:120px;resize:vertical}
 @media (max-width:640px){
   .callbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--ink);border-top:1px solid var(--line-dark);padding:10px 12px calc(10px + env(safe-area-inset-bottom));gap:10px}
   .callbar .btn{justify-content:center;padding:14px 10px;font-size:16px}
-  body{padding-bottom:76px}
+  .foot{padding-bottom:calc(34px + 76px + env(safe-area-inset-bottom))}
+}
+
+/* ---------- defaults for parts that only show on phones ---------- */
+.m-only,.nav-extra,.map-mob,.tbl .sh,.towns .sh,.stats-foot{display:none}
+.map{position:relative}
+.map-open{display:none}
+.nav-backdrop{display:none}
+input[type=range]{-webkit-appearance:none;appearance:none;height:44px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:var(--steel-2)}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--steel-2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:var(--amber);border:4px solid var(--ink);margin-top:-11px}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--amber);border:4px solid var(--ink)}
+.seg button{min-height:46px}
+.brand{min-height:48px}
+.menu-btn{min-height:44px;min-width:76px}
+
+/* ---------- menu (tablet and phone) ---------- */
+@media (max-width:1060px){
+  .nav.open{position:fixed;top:72px;left:0;right:0;bottom:0;overflow:auto;z-index:56;padding:6px var(--gut) 28px;border-bottom:0}
+  .nav.open a:not(.btn){display:flex;justify-content:space-between;align-items:center;font-size:22px;padding:17px 4px;border-bottom:1px solid var(--line-dark);border-radius:0}
+  .nav.open a:not(.btn)::after{content:"\203A";font:400 30px/1 var(--body);color:var(--amber)}
+  .nav.open a[aria-current=page]{background:transparent;color:var(--amber)}
+  .nav.open .m-only{display:flex}
+  .nav.open .nav-extra{display:grid;gap:14px;padding-top:22px;justify-items:start}
+  .nav-extra .btn{width:100%;justify-content:center}
+  .nav-extra p{margin:0;color:var(--mist);font-size:16px}
+  body.menu-open{overflow:hidden}
+}
+
+/* ---------- phones ---------- */
+@media (max-width:640px){
+  .top .wrap{min-height:64px;gap:12px}
+  .top-call{display:none}
+  .nav.open{top:64px}
+  .sec{padding:52px 0}
+  .sec.tight{padding:44px 0}
+  .sec-head{margin-bottom:26px;gap:14px}
+  h2{font-size:clamp(32px,9vw,44px)}
+  .lead{font-size:18px}
+  .eyebrow{font-size:14px;margin-bottom:10px}
+
+  /* hero */
+  .hero .wrap{padding-bottom:40px}
+  .hero h1{margin:14px 0 16px}
+  .phead h1{font-size:clamp(38px,11.5vw,56px)}
+  .hero .btns .btn{flex:1 1 auto;justify-content:center}
+  .hero-facts{font-size:15px;gap:6px 16px}
+
+  /* stats: 2 x 2, notes folded into one footnote */
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat,.stat + .stat{padding:20px 12px 18px 0;border-right:0;border-top:1px solid var(--line-dark)}
+  .stat:nth-child(even){padding-left:14px;border-left:1px solid var(--line-dark)}
+  .stat .num{font-size:clamp(48px,15vw,64px)}
+  .stat .cap{font-size:15px;margin-top:8px}
+  .stat .note{display:none}
+  .stats-foot{display:block;margin:14px 0 0;font-size:14px;color:var(--mist)}
+
+  /* hours chart */
+  .hours{padding:18px 14px 16px}
+  .hours-legend{font-size:14px;gap:8px 16px;margin-bottom:14px}
+  .hgrid{grid-template-columns:40px minmax(0,1fr);row-gap:8px}
+  .hday{font-size:14px}
+  .htrack{height:34px}
+  .hbar{height:14px}
+  .hours-sum{font-size:15px;gap:6px 20px}
+  .hours-sum b{font-size:28px}
+
+  /* cards: photo left, words right */
+  .cards,.cards.three{grid-template-columns:minmax(0,1fr);gap:12px}
+  .card{flex-direction:row;align-items:stretch}
+  .card img{width:112px;flex:none;aspect-ratio:auto;height:auto;min-height:100%;object-fit:cover}
+  .card .body{padding:14px 14px 14px;gap:6px}
+  .card h3{font-size:22px}
+  .card p{font-size:15px;line-height:1.45}
+  .card .more{font-size:14px}
+
+  /* steps: number beside the heading */
+  .steps{grid-template-columns:minmax(0,1fr);gap:0}
+  .step,.step + .step{padding:16px 0 18px;border-top-width:3px;display:grid;grid-template-columns:52px minmax(0,1fr);column-gap:8px}
+  .step .n{font-size:36px;margin:0;grid-row:span 2}
+  .step.plain{display:block}
+  .step h3{font-size:24px;margin-bottom:6px;align-self:center}
+  .step p{font-size:16px;grid-column:2}
+
+  /* calculator */
+  .compare{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .leg{padding:12px 12px 12px}
+  .leg .who{font-size:14px;letter-spacing:.05em}
+  .leg .km{font-size:clamp(32px,10vw,44px)}
+  .leg .t{font-size:14px}
+  .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .seg button{padding:12px 8px}
+  .calc-in{padding:18px 16px;gap:18px}
+  .calc-out{padding:22px 18px}
+  .yr{font-size:clamp(60px,19vw,84px)}
+  .yr-cap{font-size:15px}
+  .equiv{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0}
+  .equiv b{font-size:clamp(24px,7.4vw,32px)}
+  .equiv span{font-size:14px;letter-spacing:.03em}
+  .per-trip{font-size:15px}
+  .calc-out .btn{width:100%;justify-content:center}
+
+  /* metals: two up, compact */
+  .metals{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .metal{padding:14px}
+  .metal h3{font-size:21px}
+  .metal p{font-size:14px;line-height:1.4}
+  .metal .sw{margin-bottom:10px}
+
+  .list{padding:16px 16px 10px}
+  .list li{font-size:16px;padding:10px 0}
+  .tag{font-size:14px;letter-spacing:.06em}
+  .no{padding:18px}
+
+  /* region map + towns table */
+  .map-desk{display:none}
+  .map-mob{display:block}
+  .region{padding:6px}
+  .towns .lg{display:none}
+  .towns .sh{display:inline}
+  .towns .t-time{display:none}
+  table.towns{min-width:0;font-size:16px}
+  .towns th,.towns td{padding:11px 10px}
+  .towns th{font-size:14px;letter-spacing:.04em}
+
+  /* find us map: let the page scroll past it, open Maps on tap */
+  .map,.map iframe{min-height:300px}
+  .map iframe{pointer-events:none;height:300px}
+  .map-open{display:flex;justify-content:center;position:absolute;left:12px;right:12px;bottom:46px}
+  .dir-btn,.dir-btns{display:none}
+  body.menu-open .callbar{display:none}
+  .info dl{gap:14px}
+  .info dd{font-size:18px}
+
+  /* forms + cta + faq */
+  form.enq .btn{width:100%;justify-content:center}
+  .cta .wrap{padding-top:34px;padding-bottom:34px}
+  .cta .btns{width:100%}
+  .cta .btn{flex:1 1 auto;justify-content:center}
+  .faq summary{font-size:19px;padding:18px 36px 18px 0}
+  .split{gap:24px}
+
+  /* footer */
+  .foot{padding-top:40px;font-size:15px}
+  .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+  .foot-grid > div:first-child,.foot-grid > div:last-child{grid-column:1 / -1}
+  .foot img{height:58px}
+  .foot-grid > div:last-child ul{display:flex;flex-wrap:wrap;gap:4px 18px}
+  .foot ul{gap:0 18px}
+  .foot ul a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+  .foot .legal{margin-top:28px;font-size:14px}
+}
+@media (max-width:360px){
+  .seg button{font-size:14px;letter-spacing:.03em;padding:12px 4px}
+  table.towns{font-size:15px}
+  .towns th,.towns td{padding:10px 6px}
+  .towns th{font-size:13px;letter-spacing:.02em}
+  .row3{gap:8px}
+  .row3 .field label{letter-spacing:.03em;font-size:14px}
+  .metals{grid-template-columns:minmax(0,1fr)}
+  .card img{width:96px}
 }

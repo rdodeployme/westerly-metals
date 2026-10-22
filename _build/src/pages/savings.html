@@ -13,51 +13,9 @@ nav: savings
 </section>
 <div class="hazard"></div>
 
-<section class="sec">
-  <div class="wrap calc" id="calc">
-    <div class="calc-in">
-      <div class="field"><label for="c-town">Coming from</label><select id="c-town"></select></div>
-      <div class="field">
-        <label id="veh-l">What you drive</label>
-        <div class="seg" role="group" aria-labelledby="veh-l">
-          <button type="button" data-lp="12" aria-pressed="true">Ute</button>
-          <button type="button" data-lp="16" aria-pressed="false">Ute and trailer</button>
-          <button type="button" data-lp="20" aria-pressed="false">Light truck</button>
-          <button type="button" data-lp="32" aria-pressed="false">Tipper</button>
-        </div>
-      </div>
-      <div class="field">
-        <label for="c-loads">Scrap runs a month</label>
-        <div class="range-row"><input type="range" id="c-loads" min="1" max="20" step="1" value="2"><output id="c-loads-out" for="c-loads">2</output></div>
-      </div>
-      <div class="row2">
-        <div class="field"><label for="c-fuel">Diesel, $ per litre</label><input type="number" id="c-fuel" value="2.65" min="0" step="0.01" inputmode="decimal"><div class="hint">Change to what you pay.</div></div>
-        <div class="field"><label for="c-lp100">Litres per 100&nbsp;km</label><input type="number" id="c-lp100" value="12" min="0" step="0.5" inputmode="decimal"><div class="hint">Set by vehicle. Change it if you know yours.</div></div>
-      </div>
-      <div class="field"><label for="c-rate">Your time, $ an hour</label><input type="number" id="c-rate" value="60" min="0" step="5" inputmode="decimal"><div class="hint">What an hour off the tools or out of the paddock is worth, or a driver's wage.</div></div>
-    </div>
-    <div class="calc-out" aria-live="polite">
-      <p class="eyebrow">You keep</p>
-      <div class="yr" id="o-year">$0</div>
-      <div class="yr-cap" id="o-year-cap">a year back</div>
-      <div class="equiv">
-        <div><b id="o-km">0</b><span>km less driving a year</span></div>
-        <div><b id="o-tanks">0</b><span>80&nbsp;L tanks of diesel</span></div>
-        <div><b id="o-days">0</b><span>8-hour days back</span></div>
-      </div>
-      <table class="per-trip">
-        <caption class="sr">Saving per round trip</caption>
-        <tbody>
-          <tr><th scope="row">Less driving per round trip</th><td id="t-km">0 km</td></tr>
-          <tr><th scope="row">Time back per round trip</th><td id="t-time">0 min</td></tr>
-          <tr><th scope="row">Fuel saved</th><td id="t-fuel">0 L</td></tr>
-          <tr><th scope="row">Your time saved</th><td id="t-timev">$0</td></tr>
-          <tr><th scope="row">Total per round trip</th><td id="t-total">$0</td></tr>
-        </tbody>
-      </table>
-      <p class="small" id="o-route"></p>
-      <p class="small">Road distances and drive times from OpenStreetMap routing, town centre to gate, without traffic. West Melbourne traffic usually makes the Laverton trip longer still.</p>
-    </div>
+<section class="sec" id="calculator">
+  <div class="wrap">
+    {{CALC}}
   </div>
 </section>
 
