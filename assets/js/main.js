@@ -129,6 +129,140 @@
     calc();
   }
 
+  /* ---- prices: board + load estimate (rates from rates.js) ---- */
+  var board = document.querySelector(".board");
+  if (board) {
+    var R = window.WM_RATES || { rates: {}, fees: {} };
+    var rates = R.rates || {}, fees = R.fees || {};
+    var money = function (n, dp) { return "$" + Number(n).toLocaleString("en-AU", { minimumFractionDigits: dp, maximumFractionDigits: dp }); };
+    var has = function (v) { return typeof v === "number" && isFinite(v) && v >= 0; };
+    var anyRate = Object.keys(rates).some(function (k) { return has(rates[k]); });
+
+    // stamp
+    var stamp = document.getElementById("rates-stamp");
+    if (stamp && R.updated) {
+      stamp.classList.add("is-live");
+      stamp.querySelector("span").innerHTML = "Rates per kg · updated <b>" + String(R.updated).replace(/[<>&]/g, "") + "</b>";
+    } else if (stamp && !anyRate) {
+      stamp.querySelector("span").textContent = "Call for today's rates · per kg, clean and sorted";
+    }
+    // fill prices
+    board.querySelectorAll("[data-rate]").forEach(function (el) {
+      var v = rates[el.getAttribute("data-rate")];
+      if (has(v)) el.innerHTML = '<span class="amt">' + money(v, 2) + '</span><span class="per">/kg</span>';
+    });
+    board.querySelectorAll("[data-fee]").forEach(function (el) {
+      var v = fees[el.getAttribute("data-fee")];
+      if (has(v)) el.innerHTML = '<span class="amt">' + money(v, 0) + '</span><span class="per">each</span>';
+    });
+    // tabs
+    var tabs = board.querySelectorAll('[role="tab"]');
+    var pick = function (t) {
+      tabs.forEach(function (x) {
+        var on = x === t; x.setAttribute("aria-selected", on ? "true" : "false"); x.tabIndex = on ? 0 : -1;
+        document.getElementById(x.getAttribute("aria-controls")).hidden = !on;
+      });
+    };
+    tabs.forEach(function (t, i) {
+      t.tabIndex = i === 0 ? 0 : -1;
+      t.addEventListener("click", function () { pick(t); t.scrollIntoView({ block: "nearest", inline: "nearest" }); });
+      t.addEventListener("keydown", function (e) {
+        var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!d) return;
+        e.preventDefault(); var n = tabs[(i + d + tabs.length) % tabs.length]; pick(n); n.focus();
+      });
+    });
+
+    // estimator
+    var est = document.getElementById("est");
+    if (est) {
+      var mode = "drop";
+      var townSel = document.getElementById("est-town");
+      fillSelect(townSel, "Warrnambool");
+      var rows = est.querySelectorAll(".mrow");
+      var kgOf = function (row) { var v = parseFloat(row.querySelector(".kg-in").value); return isFinite(v) && v > 0 ? Math.round(v) : 0; };
+      var setKg = function (row, v) { row.querySelector(".kg-in").value = Math.max(0, Math.round(v)); calcEst(); };
+      rows.forEach(function (row) {
+        row.querySelector(".kg-minus").addEventListener("click", function () { setKg(row, kgOf(row) - 10); });
+        row.querySelector(".kg-plus").addEventListener("click", function () { setKg(row, kgOf(row) + 10); });
+        row.querySelector(".kg-in").addEventListener("input", calcEst);
+        row.querySelector(".kg-in").addEventListener("focus", function () { if (this.value === "0") this.select(); });
+        row.querySelector(".mgrade").addEventListener("change", calcEst);
+      });
+      est.querySelectorAll("#est-mode button").forEach(function (b) {
+        b.addEventListener("click", function () {
+          mode = b.getAttribute("data-mode");
+          est.querySelectorAll("#est-mode button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+          calcEst();
+        });
+      });
+      townSel.addEventListener("change", calcEst);
+      document.getElementById("est-clear").addEventListener("click", function () { rows.forEach(function (r) { r.querySelector(".kg-in").value = 0; }); calcEst(); });
+      calcEst();
+    }
+  }
+
+  function calcEst() {
+    var est = document.getElementById("est"); if (!est) return;
+    var R = window.WM_RATES || { rates: {} }, rates = R.rates || {};
+    var has = function (v) { return typeof v === "number" && isFinite(v) && v >= 0; };
+    var money0 = function (n) { return "$" + Math.round(n).toLocaleString("en-AU"); };
+    var mode = est.querySelector('#est-mode button[aria-pressed="true"]').getAttribute("data-mode");
+    var t = byName(document.getElementById("est-town").value);
+    var lines = [], kg = 0, value = 0, priced = true;
+    est.querySelectorAll(".mrow").forEach(function (row) {
+      var v = parseFloat(row.querySelector(".kg-in").value); v = isFinite(v) && v > 0 ? Math.round(v) : 0;
+      row.classList.toggle("has", v > 0);
+      if (!v) return;
+      var sel = row.querySelector(".mgrade"), gid = sel.value, gname = sel.options[sel.selectedIndex].text;
+      var r = rates[gid];
+      kg += v;
+      if (has(r)) { value += v * r; lines.push([gname, fmt(v) + " kg · " + money0(v * r)]); }
+      else { priced = false; lines.push([gname, fmt(v) + " kg"]); }
+    });
+    var val = document.getElementById("est-val"), cap = document.getElementById("est-cap"), lbl = document.getElementById("est-lbl");
+    document.getElementById("est-lines").innerHTML = lines.map(function (l) { return "<li><span>" + l[0] + "</span><b>" + l[1] + "</b></li>"; }).join("");
+    document.getElementById("est-kg").textContent = fmt(kg) + " kg";
+    val.classList.remove("is-call");
+    if (!kg) {
+      lbl.textContent = "Your estimate"; val.textContent = "$0"; cap.textContent = "Add some kilos to get started";
+    } else if (priced) {
+      lbl.textContent = "Your estimate";
+      val.textContent = value < 20 ? money0(value) : money0(value * 0.9) + "–" + money0(value);
+      cap.textContent = "For about " + fmt(kg) + " kg at today's rates";
+    } else {
+      lbl.textContent = "Your load"; val.classList.add("is-call"); val.textContent = fmt(kg) + " kg";
+      cap.textContent = "Call for today's rate on this load";
+    }
+    // trip line + buttons
+    var trip = document.getElementById("est-trip"), cta = document.getElementById("est-cta");
+    var phoneBtn = '<a class="btn btn-amber" href="tel:0418524602">Call for today\'s rate</a>';
+    if (mode === "drop") {
+      if (t) {
+        var save = 2 * (t.mel_km - t.yard_km);
+        trip.innerHTML = "Moorabool is <b>" + fmt(t.yard_km) + " km</b> from " + t.town + (save > 0 ? ", <b>" + fmt(save) + " km less</b> per round trip than Laverton North." : ".") + " Open 6am to 6pm, 7&nbsp;days.";
+      }
+      cta.innerHTML = (kg && !priced ? phoneBtn : "") + '<a class="btn btn-line" href="https://www.google.com/maps/dir/?api=1&destination=Atkinsons+Road%2C+Moorabool+VIC+3213" target="_blank" rel="noopener">Get directions</a>';
+    } else {
+      trip.innerHTML = t ? "We'll collect from <b>" + t.town + "</b>. Pickups are quoted for the trip, and we confirm the fee before we come." : "";
+      var what = lines.map(function (l) { return l[0] + " (" + l[1].split(" · ")[0].replace(" ", " ") + ")"; }).join(", ");
+      var href = "pickups.html?town=" + encodeURIComponent(t ? t.town : "") + (what ? "&what=" + encodeURIComponent(what) : "") + "#enquire";
+      cta.innerHTML = '<a class="btn btn-amber" href="' + href + '">Ask for a pickup</a>' + (kg && !priced ? '<a class="btn btn-line" href="tel:0418524602">Call for today\'s rate</a>' : "");
+    }
+    document.getElementById("est-note").innerHTML = mode === "drop"
+      ? "Final price set on the scale at the yard. Paid by bank transfer, so bring photo&nbsp;ID."
+      : "Final price set on the scale at the yard, less the quoted pickup fee. Paid by bank&nbsp;transfer.";
+  }
+
+  /* ---- pickups form: prefill from the load estimate ---- */
+  (function () {
+    var f = document.querySelector('form.enq[data-subject="Pickup enquiry"]'); if (!f) return;
+    try {
+      var q = new URLSearchParams(location.search);
+      if (q.get("town") && f.elements.town && !f.elements.town.value) f.elements.town.value = q.get("town").slice(0, 80);
+      if (q.get("what") && f.elements.what && !f.elements.what.value) f.elements.what.value = q.get("what").slice(0, 600);
+    } catch (e) {}
+  })();
+
   /* ---- enquiry form -> email ---- */
   document.querySelectorAll("form.enq").forEach(function (f) {
     f.addEventListener("submit", function (e) {
