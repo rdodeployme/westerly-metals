@@ -239,7 +239,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--amber);outline:none}
 .calc-out .small{margin-top:16px}
 .mini-total{display:none;margin:0;font:700 20px/1.2 var(--cond);letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--bone);border-radius:8px;padding:14px 16px}
 .mini-total b{color:var(--amber);font:400 30px/1 var(--display);margin:0 4px}
-@media (max-width:900px){.calc-out{order:-1;position:static}.mini-total{display:block}}
+@media (max-width:900px){.calc-out{position:static}}
 
 /* towns table */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
