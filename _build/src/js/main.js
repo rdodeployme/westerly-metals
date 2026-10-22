@@ -54,6 +54,117 @@
       if (t.town === def) o.selected = true; sel.appendChild(o);
     });
   }
+  /* ---- town picker: type to search, scrolling list. The native select stays in the
+     page (hidden) and gets a "change" event, so the calculators work unchanged. ---- */
+  function townPicker(sel) {
+    if (!sel || sel.getAttribute("data-tp")) return;
+    sel.setAttribute("data-tp", "1");
+    var id = sel.id, lbl = document.querySelector('label[for="' + id + '"]');
+    var wrap = document.createElement("div"); wrap.className = "tp";
+    var inp = document.createElement("input");
+    inp.type = "text"; inp.className = "tp-in"; inp.id = id + "-q"; inp.autocomplete = "off"; inp.spellcheck = false;
+    inp.setAttribute("role", "combobox"); inp.setAttribute("aria-autocomplete", "list");
+    inp.setAttribute("aria-expanded", "false"); inp.setAttribute("aria-controls", id + "-list");
+    inp.placeholder = "Type your town";
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "tp-btn"; btn.tabIndex = -1; btn.setAttribute("aria-label", "Show all towns");
+    var list = document.createElement("ul");
+    list.className = "tp-list"; list.id = id + "-list"; list.setAttribute("role", "listbox"); list.hidden = true;
+    if (lbl) { lbl.htmlFor = inp.id; list.setAttribute("aria-labelledby", lbl.id || (lbl.id = id + "-l")); }
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(inp); wrap.appendChild(btn); wrap.appendChild(list); wrap.appendChild(sel);
+    sel.classList.add("tp-native"); sel.tabIndex = -1; sel.setAttribute("aria-hidden", "true");
+    inp.value = sel.value;
+
+    var shown = [], act = -1;
+    var esc = function (t) { return t.replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); };
+    function render(q) {
+      q = (q || "").trim().toLowerCase();
+      var starts = [], has = [];
+      towns.forEach(function (t) {
+        var n = t.town.toLowerCase();
+        if (!q || n.indexOf(q) === 0) starts.push(t); else if (n.indexOf(q) > 0) has.push(t);
+      });
+      shown = starts.concat(has);
+      if (!shown.length) {
+        list.innerHTML = '<li class="tp-none" role="option" aria-disabled="true">No town by that name. Try the nearest big town.</li>';
+        act = -1; return;
+      }
+      list.innerHTML = shown.map(function (t, i) {
+        var n = esc(t.town), k = q ? t.town.toLowerCase().indexOf(q) : -1;
+        if (k >= 0) n = esc(t.town.slice(0, k)) + "<mark>" + esc(t.town.slice(k, k + q.length)) + "</mark>" + esc(t.town.slice(k + q.length));
+        var cur = t.town === sel.value;
+        return '<li role="option" id="' + id + '-o' + i + '" data-i="' + i + '" aria-selected="' + cur + '"' + (cur ? ' class="cur"' : "") +
+          '><span>' + n + '</span><small>' + fmt(t.yard_km) + " km</small></li>";
+      }).join("");
+      var c = -1; shown.forEach(function (t, i) { if (t.town === sel.value) c = i; });
+      setAct(q ? 0 : Math.max(c, 0), !q);
+    }
+    function setAct(i, centre) {
+      var items = list.querySelectorAll("li[data-i]");
+      if (!items.length) { act = -1; return; }
+      act = (i + items.length) % items.length;
+      items.forEach(function (li, j) { li.classList.toggle("act", j === act); });
+      var li = items[act];
+      inp.setAttribute("aria-activedescendant", li.id);
+      if (centre) list.scrollTop = li.offsetTop - list.clientHeight / 2 + li.offsetHeight / 2;
+      else if (li.offsetTop < list.scrollTop) list.scrollTop = li.offsetTop - 6;
+      else if (li.offsetTop + li.offsetHeight > list.scrollTop + list.clientHeight) list.scrollTop = li.offsetTop + li.offsetHeight - list.clientHeight + 6;
+    }
+    function open(all) {
+      var was = list.hidden;
+      list.hidden = false; wrap.classList.add("open"); inp.setAttribute("aria-expanded", "true");
+      render(all ? "" : inp.value);
+      if (was) {
+        // make room for the list: keep it clear of the bottom call bar on phones
+        var cb = document.querySelector(".callbar"), cbh = cb && getComputedStyle(cb).display !== "none" ? cb.offsetHeight : 0;
+        var over = list.getBoundingClientRect().bottom - (window.innerHeight - cbh - 12);
+        var room = inp.getBoundingClientRect().top - 96;
+        if (over > 0 && room > 0) window.scrollBy({ top: Math.min(over, room), behavior: "smooth" });
+      }
+    }
+    function close() {
+      list.hidden = true; wrap.classList.remove("open"); inp.setAttribute("aria-expanded", "false"); inp.removeAttribute("aria-activedescendant");
+    }
+    function choose(t) {
+      if (t && t.town !== sel.value) { sel.value = t.town; sel.dispatchEvent(new Event("change", { bubbles: true })); }
+      inp.value = sel.value; close();
+    }
+    inp.addEventListener("focus", function () { open(true); inp.select(); setTimeout(function () { if (inp.value === sel.value) inp.select(); }, 0); });
+    inp.addEventListener("click", function () { if (list.hidden) { open(true); inp.select(); } });
+    inp.addEventListener("input", function () { open(false); });
+    inp.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault(); if (list.hidden) { open(true); return; }
+        setAct(act + (e.key === "ArrowDown" ? 1 : -1));
+      } else if (e.key === "Enter") {
+        if (!list.hidden) { e.preventDefault(); choose(shown[act]); }
+      } else if (e.key === "Escape") {
+        if (!list.hidden) { e.preventDefault(); inp.value = sel.value; close(); }
+      } else if (e.key === "Tab") {
+        if (!list.hidden && inp.value !== sel.value && shown[act]) choose(shown[act]); else { inp.value = sel.value; close(); }
+      }
+    });
+    inp.addEventListener("blur", function () {
+      setTimeout(function () {
+        if (wrap.contains(document.activeElement)) return;
+        var exact = byName((inp.value || "").trim().replace(/^\w/, function (c) { return c.toUpperCase(); }));
+        if (!exact) towns.forEach(function (t) { if (t.town.toLowerCase() === inp.value.trim().toLowerCase()) exact = t; });
+        if (exact) choose(exact); else { inp.value = sel.value; close(); }
+      }, 120);
+    });
+    list.addEventListener("mousedown", function (e) { e.preventDefault(); });
+    list.addEventListener("click", function (e) {
+      var li = e.target.closest("li[data-i]"); if (li) choose(shown[+li.getAttribute("data-i")]);
+    });
+    btn.addEventListener("mousedown", function (e) { e.preventDefault(); });
+    btn.addEventListener("click", function () {
+      if (list.hidden) { inp.focus(); open(true); } else { inp.value = sel.value; close(); }
+    });
+    document.addEventListener("pointerdown", function (e) { if (!wrap.contains(e.target) && !list.hidden) { inp.value = sel.value; close(); } });
+    sel.addEventListener("change", function () { if (document.activeElement !== inp) inp.value = sel.value; });
+  }
+
   function fmt(n, d) { return Number(n).toLocaleString("en-AU", { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 }); }
   function mins(m) {
     m = Math.round(m);
@@ -65,7 +176,7 @@
   /* ---- quick check (home) ---- */
   var q = document.getElementById("quick-town");
   if (q) {
-    fillSelect(q, "Warrnambool");
+    fillSelect(q, "Warrnambool"); townPicker(q);
     var paintQuick = function () {
       var t = byName(q.value); if (!t) return;
       document.getElementById("q-us-km").textContent = fmt(t.yard_km);
@@ -83,7 +194,7 @@
   var c = document.getElementById("calc");
   if (c) {
     var sel = document.getElementById("c-town");
-    fillSelect(sel, "Warrnambool");
+    fillSelect(sel, "Warrnambool"); townPicker(sel);
     var state = { lp100: 12 };
     var lp = document.getElementById("c-lp100");
     c.querySelectorAll(".seg button").forEach(function (b) {
@@ -176,7 +287,7 @@
     if (est) {
       var mode = "drop";
       var townSel = document.getElementById("est-town");
-      fillSelect(townSel, "Warrnambool");
+      fillSelect(townSel, "Warrnambool"); townPicker(townSel);
       var rows = est.querySelectorAll(".mrow");
       var kgOf = function (row) { var v = parseFloat(row.querySelector(".kg-in").value); return isFinite(v) && v > 0 ? Math.round(v) : 0; };
       var setKg = function (row, v) { row.querySelector(".kg-in").value = Math.max(0, Math.round(v)); calcEst(); };
