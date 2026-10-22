@@ -593,3 +593,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .call-rate,.quoted{min-height:44px;padding:0 16px}
   .mrow .mgrade{min-height:44px}
 }
+/* big figures: leave room for comma descenders so they don't hit the caption */
+.yr,.est-val{line-height:1;padding-bottom:.1em;margin-bottom:0}
+.yr-cap,.est-cap{margin-top:6px}
+.stat .num{line-height:1;padding-bottom:.06em}
