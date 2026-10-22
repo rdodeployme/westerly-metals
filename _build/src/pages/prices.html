@@ -41,23 +41,24 @@ nav: prices
     </div>
     <div class="est" id="est">
       <div class="est-in">
+        <div class="est-top">
         <div class="field">
           <label id="mode-l">Getting it to us</label>
           <div class="seg seg-2" role="group" aria-labelledby="mode-l" id="est-mode">
-            <button type="button" data-mode="drop" aria-pressed="true">I'll drop it off</button>
-            <button type="button" data-mode="pickup" aria-pressed="false">Pick it up for me</button>
+            <button type="button" data-mode="drop" aria-pressed="true">Drop off</button>
+            <button type="button" data-mode="pickup" aria-pressed="false">Pick up</button>
           </div>
         </div>
         <div class="field">
           <label for="est-town">Coming from</label>
           <select id="est-town">{{TOWN_OPTIONS}}</select>
-          <p class="est-trip" id="est-trip" aria-live="polite"></p>
         </div>
+        </div>
+        <p class="est-trip" id="est-trip" aria-live="polite"></p>
         <div class="field">
-          <label id="metals-l">Your metal</label>
+          <div class="lbl-row"><label id="metals-l">Your metal</label><button type="button" class="est-clear" id="est-clear">Clear all</button></div>
           <div class="mlist" role="group" aria-labelledby="metals-l">{{EST_ROWS}}</div>
         </div>
-        <button type="button" class="est-clear" id="est-clear">Clear all</button>
       </div>
       <div class="est-out" aria-live="polite">
         <p class="eyebrow" id="est-lbl">Your estimate</p>
@@ -85,7 +86,7 @@ nav: prices
       <div class="step"><span class="n">01</span><h3>The metal</h3><p>Copper and brass pay the most per kilo, then aluminium, stainless and lead. Steel pays the least but adds up by the&nbsp;tonne.</p></div>
       <div class="step"><span class="n">02</span><h3>The grade</h3><p>Bright copper pays more than cable. Clean extrusion pays more than mixed aluminium. Sorting by grade puts money in your&nbsp;pocket.</p></div>
       <div class="step"><span class="n">03</span><h3>How clean it&nbsp;is</h3><p>Steel bolted to brass, plastic on cable or oil in a motor brings the rate down to the lowest grade in the&nbsp;pile.</p></div>
-      <div class="step"><span class="n">04</span><h3>Handling</h3><p>Fridges, air-cons, car bodies and mixed items need extra work, so they carry a handling fee. Call first for a&nbsp;quote.</p></div>
+      <div class="step"><span class="n">04</span><h3>Handling</h3><p>Fridges and air-cons need their gas removed, so they carry a handling fee. Car bodies and part-metal items are paid at a lower&nbsp;rate.</p></div>
     </div>
   </div>
 </section>
@@ -98,7 +99,7 @@ nav: prices
     </div>
     <div>
       <p class="lead" style="color:#E3DFD7">Victorian law has banned cash for scrap metal since May 2018. We weigh your metal, grade it in front of you and pay by bank transfer. Bring photo ID and your bank&nbsp;details.</p>
-      <p class="small" style="color:#C9CDD0">Want today's rate before you load up? Call Sean on <a href="tel:{{PHONE_TEL}}" style="color:#F2EFE9">{{PHONE}}</a>.</p>
+      <p class="small" style="color:#C9CDD0">Board rates are a guide and move with the metal market. Want today's rate before you load up? Call Sean on <a href="tel:{{PHONE_TEL}}" style="color:#F2EFE9">{{PHONE}}</a>.</p>
     </div>
   </div>
 </section>

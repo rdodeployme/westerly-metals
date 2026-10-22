@@ -135,6 +135,16 @@
      "st-mixed",
      "Mixed steel",
      "Unsorted shed and farm steel"
+    ],
+    [
+     "st-cars",
+     "Car bodies",
+     "Drained of fuel, oil and coolant. Call first"
+    ],
+    [
+     "st-part",
+     "Part-metal items",
+     "Desks, chairs, outdoor settings"
     ]
    ]
   },
@@ -193,16 +203,6 @@
    "fee-aircon",
    "Air-conditioners",
    "Gas must come out before recycling"
-  ],
-  [
-   "fee-car",
-   "Car bodies",
-   "Drained of fuel, oil and coolant"
-  ],
-  [
-   "fee-mixed",
-   "Items that are part metal",
-   "Desks, chairs, outdoor settings: priced on the metal"
   ]
  ]
 }

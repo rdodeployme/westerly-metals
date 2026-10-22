@@ -111,7 +111,6 @@
       var trip$ = fuel$ + time$;
       var year = n * 12;
       document.getElementById("o-year").textContent = "$" + fmt(trip$ * year);
-      var mini = document.getElementById("o-year-mini"); if (mini) mini.textContent = "$" + fmt(trip$ * year);
       document.getElementById("o-year-cap").textContent = "a year back, at " + n + " load" + (n > 1 ? "s" : "") + " a month from " + t.town;
       document.getElementById("o-km").textContent = fmt(km * year);
       document.getElementById("o-tanks").textContent = fmt(litres * year / 80, 1);
@@ -142,7 +141,7 @@
     var stamp = document.getElementById("rates-stamp");
     if (stamp && R.updated) {
       stamp.classList.add("is-live");
-      stamp.querySelector("span").innerHTML = "Rates per kg · updated <b>" + String(R.updated).replace(/[<>&]/g, "") + "</b>";
+      stamp.querySelector("span").innerHTML = "Rates per kg · <b>" + String(R.updated).replace(/[<>&]/g, "") + "</b>";
     } else if (stamp && !anyRate) {
       stamp.querySelector("span").textContent = "Call for today's rates · per kg, clean and sorted";
     }
@@ -228,7 +227,7 @@
     } else if (priced) {
       lbl.textContent = "Your estimate";
       val.textContent = value < 20 ? money0(value) : money0(value * 0.9) + "–" + money0(value);
-      cap.textContent = "For about " + fmt(kg) + " kg at today's rates";
+      cap.textContent = "For about " + fmt(kg) + " kg at our listed rates";
     } else {
       lbl.textContent = "Your load"; val.classList.add("is-call"); val.textContent = fmt(kg) + " kg";
       cap.textContent = "Call for today's rate on this load";

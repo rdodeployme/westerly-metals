@@ -597,3 +597,127 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .yr,.est-val{line-height:1;padding-bottom:.1em;margin-bottom:0}
 .yr-cap,.est-cap{margin-top:6px}
 .stat .num{line-height:1;padding-bottom:.06em}
+
+/* ======================================================================
+   FIT PASS: sizes follow screen height as well as width, so the hero,
+   calculators and estimate fit on short laptop screens, iPad and phones.
+   ====================================================================== */
+h1{font-size:clamp(40px,min(8.4vw,13vh),104px)}
+h2{font-size:clamp(30px,min(5vw,8vh),58px)}
+.phead h1{font-size:clamp(40px,min(7vw,12vh),88px)}
+.hero .wrap{padding-top:clamp(36px,7vh,96px);padding-bottom:clamp(36px,7vh,88px)}
+.hero h1{margin:14px 0 18px}
+.hero .lead{margin-bottom:24px}
+.hero .btns{margin-bottom:22px}
+.sec{padding:clamp(48px,min(8vw,10vh),104px) 0}
+.sec-head{margin-bottom:clamp(22px,4vh,44px)}
+.stat .num{font-size:clamp(52px,min(7vw,12vh),104px)}
+
+/* savings calculator */
+.calc{gap:clamp(18px,2.4vw,32px)}
+.calc-in{padding:clamp(16px,2.4vh,26px) clamp(16px,2vw,26px);gap:clamp(12px,1.8vh,18px)}
+.calc .compare{gap:10px}
+.calc .leg{padding:10px 14px}
+.calc .leg .km{font-size:clamp(30px,min(3.6vw,6vh),46px);margin-top:4px}
+.calc .leg .t{margin-top:2px}
+.calc .field label,.calc .row3 .field label{margin-bottom:6px}
+.calc .seg button{min-height:44px;padding:10px 12px}
+.calc .range-row input[type=range]{height:36px}
+.calc .row3 input{padding:10px 10px}
+.calc-hint{margin:0}
+.calc-out{padding:clamp(18px,2.6vh,30px) clamp(18px,2.2vw,30px);top:84px}
+.yr{font-size:clamp(52px,min(7vw,11vh),100px)}
+.equiv{margin:clamp(12px,2vh,20px) 0;gap:10px}
+.equiv div{padding-top:8px}
+.equiv b{font-size:clamp(24px,min(2.8vw,5vh),36px)}
+.equiv span{font-size:14px;margin-top:4px}
+.per-trip th,.per-trip td{padding:clamp(5px,1vh,8px) 0}
+.calc-foot{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-top:12px}
+.calc-foot .small{margin:0}
+.btn-sm{padding:11px 16px;font-size:15px}
+@media (max-width:900px) and (min-width:761px){.calc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.calc-out{position:sticky}}
+@media (max-width:760px){.calc{grid-template-columns:minmax(0,1fr)}.calc-out{position:static}}
+@media (min-width:761px) and (max-width:1060px){
+  .calc .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .equiv span{font-size:13px}
+}
+/* side by side: the results panel is never taller than the inputs beside it */
+@media (min-width:761px){
+  .calc{align-items:stretch}
+  .calc-out{position:static;display:flex;flex-direction:column}
+  .yr{font-size:clamp(44px,min(4.6vw,8vh),72px)}
+  .yr-cap{font-size:clamp(14px,1.2vw,16px)}
+  .equiv{margin:clamp(10px,1.6vh,16px) 0}
+  .equiv b{font-size:clamp(22px,min(2.4vw,4.4vh),32px)}
+  .calc-foot{margin-top:auto;padding-top:12px}
+}
+
+/* prices estimate */
+.est-in{padding:clamp(16px,2.4vh,26px) clamp(16px,2vw,26px);gap:clamp(12px,1.8vh,18px)}
+.est-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:end}
+.est-top .field label{margin-bottom:6px}
+.est-trip{margin:0}
+.lbl-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.lbl-row label{margin:0!important}
+.est-clear{min-height:36px;padding:0}
+.mlist{gap:6px}
+.mrow{padding:6px 8px 6px 10px;gap:10px}
+.mrow .sw{height:34px;width:10px}
+.mrow-main{display:grid;grid-template-columns:8.4em minmax(0,1fr);align-items:center;gap:10px}
+.mrow-main b{font-size:17px;line-height:1.1}
+.mrow .mgrade{margin-top:0;padding:8px 8px;font-size:15px}
+.kg button{width:40px;height:40px}
+.kg .kg-in{width:72px;padding:8px 6px}
+.est-out{padding:clamp(18px,2.6vh,30px) clamp(18px,2.2vw,30px);top:84px}
+.est-val{font-size:clamp(46px,min(6vw,10vh),84px)}
+.est-lines{margin-top:clamp(10px,1.8vh,18px)}
+.est-lines li{padding:clamp(5px,1vh,8px) 0}
+.est-cta{margin-top:12px}
+@media (max-width:1100px){.est-top{grid-template-columns:minmax(0,1fr)}}
+
+/* phones */
+@media (max-width:640px){
+  .hero-media{height:44vw;min-height:170px}
+  .hero-facts{display:none}
+  .hero .wrap{padding-bottom:30px}
+  .hero .lead{font-size:17px}
+  .stat .num{font-size:clamp(44px,13vw,56px)}
+  .yr{font-size:clamp(48px,15vw,64px)}
+  .yr-cap{font-size:14px}
+  .equiv{margin:12px 0}
+  .equiv b{font-size:clamp(22px,7vw,28px)}
+  .equiv span{font-size:13px}
+  .per-trip{font-size:15px}
+  .calc-in,.calc-out,.est-in,.est-out{padding:16px}
+  .calc .leg .km{font-size:clamp(28px,9vw,36px)}
+  .calc .leg .t{font-size:13px}
+  .calc .seg button{padding:10px 6px}
+  .est-val{font-size:clamp(42px,13vw,56px)}
+  .mrow{grid-template-columns:auto minmax(0,1fr);row-gap:6px}
+  .mrow-main{grid-template-columns:6.4em minmax(0,1fr);gap:8px}
+  .mrow-main b{font-size:16px}
+  .mrow .mgrade{min-height:40px}
+  .kg button{width:44px;height:40px}
+  .grade{padding:11px 16px}
+  .grade small{font-size:13px}
+  .board-top{gap:12px}
+}
+/* phones: one line per metal; the grade picker appears once that metal has kilos */
+@media (max-width:640px){
+  .mrow{grid-template-columns:10px minmax(0,1fr) auto;column-gap:10px;row-gap:8px;align-items:center;padding:8px 8px 8px 10px}
+  .mrow .sw{grid-column:1;grid-row:1 / span 2;align-self:stretch;height:auto;min-height:34px}
+  .mrow-main{display:contents}
+  .mrow-main b{grid-column:2;grid-row:1;font-size:16px}
+  .mrow .mgrade{grid-column:2 / -1;grid-row:2;display:none}
+  .mrow.has .mgrade{display:block}
+  .kg{grid-column:3;grid-row:1;justify-content:flex-end;gap:4px}
+  .kg .kg-in{flex:none;width:58px;padding:8px 4px}
+  .kg button{width:40px;height:40px}
+  .kg-u{display:none}
+}
+@media (max-width:340px){
+  .mrow{column-gap:8px;padding:8px 6px 8px 8px}
+  .mrow-main b{font-size:15px;letter-spacing:.01em}
+  .kg button{width:36px}
+  .kg .kg-in{width:50px}
+}
