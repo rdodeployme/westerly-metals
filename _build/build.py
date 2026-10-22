@@ -26,6 +26,16 @@ EXCLUDE = {"Ararat", "Beaufort"}  # quicker to Melbourne via the Western Freeway
 towns = [t for t in json.load(open(os.path.join(ROOT, "data", "towns.json"))) if t["town"] not in EXCLUDE]
 
 
+
+def _ver():
+    """Short content hash of the CSS, JS and town data, added to asset links so browsers fetch new versions."""
+    import hashlib
+    h = hashlib.sha1()
+    for f in (os.path.join(SRC, "css", "main.css"), os.path.join(SRC, "js", "main.js"), os.path.join(ROOT, "data", "towns.json")):
+        h.update(open(f, "rb").read())
+    return h.hexdigest()[:8]
+VER = _ver()
+
 def X(h):  # hours chart: 4am to 8pm window
     return (h - 4) / 16 * 100
 
@@ -280,7 +290,7 @@ def page(fname):
             "opens": "06:00", "closes": "18:00"}],
         "areaServed": "Western District, Victoria", "image": SITE_URL + "og.jpg",
     }
-    scripts = '<script src="assets/js/towns.js" defer></script>' if fname in ("index.html", "savings.html", "prices.html") else ""
+    scripts = f'<script src="assets/js/towns.js?v={VER}" defer></script>' if fname in ("index.html", "savings.html", "prices.html") else ""
     if fname == "prices.html":
         scripts += '<script src="assets/js/rates.js" defer></script>\n'
     html = f'''<!doctype html>
@@ -300,7 +310,7 @@ def page(fname):
 <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/main.css?v={VER}">
 <script type="application/ld+json">{json.dumps(schema)}</script>
 </head>
 <body>
@@ -309,7 +319,7 @@ def page(fname):
 {body}
 </main>
 {footer()}
-{scripts}<script src="assets/js/main.js" defer></script>
+{scripts}<script src="assets/js/main.js?v={VER}" defer></script>
 </body>
 </html>
 '''
