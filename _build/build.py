@@ -15,7 +15,7 @@ MAP_IFRAME = (
     f'<a class="map-open btn btn-amber" href="{MAPS_DIR}" target="_blank" rel="noopener">Open in Google Maps</a>'
 )
 
-NAV = [("savings", "savings.html", "Savings"), ("take", "what-we-take.html", "What we take"),
+NAV = [("savings", "savings.html", "Savings"), ("prices", "prices.html", "Prices"), ("take", "what-we-take.html", "What we take"),
        ("pickups", "pickups.html", "Pickups"), ("find", "find-us.html", "Find us")]
 
 PHONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>'
@@ -154,6 +154,64 @@ def region_map(mobile=False):
     return svg
 
 
+PRICES = json.load(open(os.path.join(ROOT, "data", "prices.json")))
+
+
+def price_board():
+    fams = PRICES["families"]
+    tabs = "".join(
+        f'<button type="button" role="tab" id="pt-{f["key"]}" aria-controls="pp-{f["key"]}" aria-selected="{"true" if i == 0 else "false"}">'
+        f'<i style="background:{f["colour"]}"></i>{f["name"]}</button>' for i, f in enumerate(fams)
+    ) + '<button type="button" role="tab" id="pt-fees" aria-controls="pp-fees" aria-selected="false"><i class="fee-dot"></i>Handling fees</button>'
+    panes = ""
+    for i, f in enumerate(fams):
+        rows = "".join(
+            f'<div class="grade"><div><b>{n}</b><small>{d}</small></div>'
+            f'<div class="price" data-rate="{gid}"><a class="call-rate" href="tel:{PHONE_TEL}">Call</a></div></div>'
+            for gid, n, d in f["grades"]
+        )
+        panes += f'<div class="grades" role="tabpanel" id="pp-{f["key"]}" aria-labelledby="pt-{f["key"]}"{"" if i == 0 else " hidden"}>{rows}</div>'
+    rows = "".join(
+        f'<div class="grade"><div><b>{n}</b><small>{d}</small></div>'
+        f'<div class="price" data-fee="{fid}"><span class="quoted">Quoted</span></div></div>'
+        for fid, n, d in PRICES["fees"]
+    )
+    panes += f'<div class="grades" role="tabpanel" id="pp-fees" aria-labelledby="pt-fees" hidden>{rows}</div>'
+    return (
+        '<div class="board">'
+        '<div class="board-top"><div class="live" id="rates-stamp"><i></i><span>Rates per kg for clean, sorted metal</span></div>'
+        f'<div class="mtabs" role="tablist" aria-label="Metal">{tabs}</div></div>'
+        f'{panes}'
+        '<div class="board-foot"><p>Clean, sorted metal gets the best rate. Mixed or dirty loads are graded on the scale, '
+        'and the final price is set when it\'s weighed.</p>'
+        '<a class="btn btn-amber" href="#estimate">Estimate my load</a></div>'
+        "</div>"
+    )
+
+
+def estimator_rows():
+    out = ""
+    for f in PRICES["families"]:
+        opts = "".join(f'<option value="{gid}">{n}</option>' for gid, n, d in f["grades"])
+        out += (
+            f'<div class="mrow" data-family="{f["key"]}">'
+            f'<span class="sw" style="background:{f["colour"]}"></span>'
+            f'<div class="mrow-main"><b>{f["name"]}</b>'
+            f'<label class="sr" for="g-{f["key"]}">{f["name"]} grade</label><select id="g-{f["key"]}" class="mgrade">{opts}</select></div>'
+            f'<div class="kg"><button type="button" class="kg-minus" aria-label="10 kg less {f["name"].lower()}">\u2212</button>'
+            f'<label class="sr" for="kg-{f["key"]}">{f["name"]} kilos</label>'
+            f'<input id="kg-{f["key"]}" class="kg-in" type="number" inputmode="numeric" min="0" step="10" value="0">'
+            f'<span class="kg-u">kg</span>'
+            f'<button type="button" class="kg-plus" aria-label="10 kg more {f["name"].lower()}">+</button></div>'
+            "</div>"
+        )
+    return out
+
+
+def town_options():
+    return "".join(f'<option value="{t["town"]}"{" selected" if t["town"] == "Warrnambool" else ""}>{t["town"]}</option>' for t in sorted(towns, key=lambda t: t["town"]))
+
+
 def towns_js():
     slim = [{k: t[k] for k in ("town", "yard_km", "mel_km", "yard_min", "mel_min")} for t in towns]
     return "window.WM_TOWNS=" + json.dumps(slim, separators=(",", ":")) + ";\n"
@@ -203,6 +261,8 @@ def page(fname):
     for key, val in {
         "{{HOURS_CHART}}": hours_chart(), "{{TOWNS_TABLE}}": towns_table(), "{{REGION_MAP}}": '<div class="map-desk">' + region_map() + '</div><div class="map-mob">' + region_map(True) + "</div>",
         "{{CALC}}": open(os.path.join(SRC, "partials", "calc.html")).read().strip(),
+        "{{PRICE_BOARD}}": price_board(), "{{EST_ROWS}}": estimator_rows(), "{{TOWN_OPTIONS}}": town_options(),
+        "{{PHONE}}": PHONE, "{{PHONE_TEL}}": PHONE_TEL,
         "{{MAPS_DIR}}": MAPS_DIR, "{{MAP_IFRAME}}": MAP_IFRAME,
     }.items():
         body = body.replace(key, val)
@@ -220,7 +280,9 @@ def page(fname):
             "opens": "06:00", "closes": "18:00"}],
         "areaServed": "Western District, Victoria", "image": SITE_URL + "og.jpg",
     }
-    scripts = '<script src="assets/js/towns.js" defer></script>' if fname in ("index.html", "savings.html") else ""
+    scripts = '<script src="assets/js/towns.js" defer></script>' if fname in ("index.html", "savings.html", "prices.html") else ""
+    if fname == "prices.html":
+        scripts += '<script src="assets/js/rates.js" defer></script>\n'
     html = f'''<!doctype html>
 <html lang="en-AU">
 <head>
@@ -294,6 +356,10 @@ def main():
     shutil.copy(os.path.join(SRC, "css", "main.css"), os.path.join(SITE, "assets", "css", "main.css"))
     shutil.copy(os.path.join(SRC, "js", "main.js"), os.path.join(SITE, "assets", "js", "main.js"))
     open(os.path.join(SITE, "assets", "js", "towns.js"), "w").write(towns_js())
+    # rates.js is edited by hand on the live site: only seed it, never overwrite
+    rates_out = os.path.join(SITE, "assets", "js", "rates.js")
+    if not os.path.exists(rates_out):
+        shutil.copy(os.path.join(SRC, "js", "rates.js"), rates_out)
     built = [page(f) for f in sorted(os.listdir(os.path.join(SRC, "pages"))) if f.endswith(".html")]
     today = datetime.date.today().isoformat()
     open(os.path.join(SITE, "sitemap.xml"), "w").write(

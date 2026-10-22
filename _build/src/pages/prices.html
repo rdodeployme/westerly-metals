@@ -1,0 +1,111 @@
+<!--
+title: Prices | Westerly Metals, Moorabool
+description: Scrap metal prices per kilo at Westerly Metals, Moorabool: copper, aluminium, brass, steel, stainless and lead, plus a load estimate. Open 6am to 6pm, 7 days.
+nav: prices
+-->
+<section class="phead">
+  <div class="phead-img"><img src="assets/img/sorted-bays.webp" alt="" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow on-dark">Prices</p>
+    <h1>Know what your metal's&nbsp;worth.</h1>
+    <p class="lead">Rates per kilo for every grade we buy, and a quick estimate for your load before you&nbsp;come. Weighed in front of you, paid by bank&nbsp;transfer.</p>
+    <div class="btns" style="margin-top:26px">
+      <a class="btn btn-amber" href="#estimate">Estimate my load</a>
+      <a class="btn btn-line" href="#rates">See the price board</a>
+    </div>
+  </div>
+</section>
+<div class="hazard"></div>
+
+<section class="sec dark" id="rates">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Price board</p>
+        <h2>What we pay, metal by&nbsp;metal.</h2>
+      </div>
+      <p class="lead" style="color:#C9CDD0">Pick a metal to see each grade. Sorting your load into these grades before you come gets you the best&nbsp;rate.</p>
+    </div>
+    {{PRICE_BOARD}}
+  </div>
+</section>
+
+<section class="sec" id="estimate">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Load estimate</p>
+        <h2>What's my load&nbsp;worth?</h2>
+      </div>
+      <p class="lead">Add roughly how many kilos of each metal you've got and pick the closest grade. The final price is set when it's weighed at the&nbsp;yard.</p>
+    </div>
+    <div class="est" id="est">
+      <div class="est-in">
+        <div class="field">
+          <label id="mode-l">Getting it to us</label>
+          <div class="seg seg-2" role="group" aria-labelledby="mode-l" id="est-mode">
+            <button type="button" data-mode="drop" aria-pressed="true">I'll drop it off</button>
+            <button type="button" data-mode="pickup" aria-pressed="false">Pick it up for me</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="est-town">Coming from</label>
+          <select id="est-town">{{TOWN_OPTIONS}}</select>
+          <p class="est-trip" id="est-trip" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label id="metals-l">Your metal</label>
+          <div class="mlist" role="group" aria-labelledby="metals-l">{{EST_ROWS}}</div>
+        </div>
+        <button type="button" class="est-clear" id="est-clear">Clear all</button>
+      </div>
+      <div class="est-out" aria-live="polite">
+        <p class="eyebrow" id="est-lbl">Your estimate</p>
+        <div class="est-val" id="est-val">$0</div>
+        <div class="est-cap" id="est-cap">Add some kilos to get started</div>
+        <ul class="est-lines" id="est-lines"></ul>
+        <div class="est-total"><span>Total weight</span><b id="est-kg">0&nbsp;kg</b></div>
+        <p class="small" id="est-note">Final price set on the scale at the yard. Paid by bank transfer, so bring photo&nbsp;ID.</p>
+        <div class="btns est-cta" id="est-cta"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">What sets the price</p>
+        <h2>Four things move the&nbsp;number.</h2>
+      </div>
+      <p class="lead" style="color:#C9CDD0">The same tonne of metal can be worth very different money. Here's what makes the&nbsp;difference.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">01</span><h3>The metal</h3><p>Copper and brass pay the most per kilo, then aluminium, stainless and lead. Steel pays the least but adds up by the&nbsp;tonne.</p></div>
+      <div class="step"><span class="n">02</span><h3>The grade</h3><p>Bright copper pays more than cable. Clean extrusion pays more than mixed aluminium. Sorting by grade puts money in your&nbsp;pocket.</p></div>
+      <div class="step"><span class="n">03</span><h3>How clean it&nbsp;is</h3><p>Steel bolted to brass, plastic on cable or oil in a motor brings the rate down to the lowest grade in the&nbsp;pile.</p></div>
+      <div class="step"><span class="n">04</span><h3>Handling</h3><p>Fridges, air-cons, car bodies and mixed items need extra work, so they carry a handling fee. Call first for a&nbsp;quote.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec tight steel">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow on-dark">Getting paid</p>
+      <h2>Bank transfer, on the&nbsp;spot.</h2>
+    </div>
+    <div>
+      <p class="lead" style="color:#E3DFD7">Victorian law has banned cash for scrap metal since May 2018. We weigh your metal, grade it in front of you and pay by bank transfer. Bring photo ID and your bank&nbsp;details.</p>
+      <p class="small" style="color:#C9CDD0">Want today's rate before you load up? Call Sean on <a href="tel:{{PHONE_TEL}}" style="color:#F2EFE9">{{PHONE}}</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Open 6am to 6pm, 7&nbsp;days.</h2>
+    <div class="btns"><a class="btn btn-ink" href="find-us.html">Get directions</a><a class="btn btn-line" href="tel:{{PHONE_TEL}}">Call {{PHONE}}</a></div>
+  </div>
+</section>

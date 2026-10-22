@@ -1,0 +1,208 @@
+{
+ "families": [
+  {
+   "key": "copper",
+   "name": "Copper",
+   "colour": "#C46A3A",
+   "grades": [
+    [
+     "cu-bright",
+     "Bright copper",
+     "Clean, bright, unpainted pipe and wire"
+    ],
+    [
+     "cu-no2",
+     "Copper No.2",
+     "Soldered, painted or lightly coated pipe"
+    ],
+    [
+     "cu-cable",
+     "Insulated cable",
+     "Copper cable in PVC, plugs off"
+    ],
+    [
+     "cu-looms",
+     "Wire looms",
+     "Car, machine and appliance looms"
+    ],
+    [
+     "cu-hws",
+     "Copper hot water units",
+     "Drained, fittings left on"
+    ],
+    [
+     "cu-motors",
+     "Electric motors",
+     "Whole motors and pumps"
+    ],
+    [
+     "cu-comp",
+     "Compressors",
+     "Fridge and air-con, gas removed"
+    ],
+    [
+     "cu-alt",
+     "Starters and alternators",
+     "Whole units"
+    ]
+   ]
+  },
+  {
+   "key": "aluminium",
+   "name": "Aluminium",
+   "colour": "#B8C0C6",
+   "grades": [
+    [
+     "al-ext",
+     "Extrusion",
+     "Window and door frames, sections"
+    ],
+    [
+     "al-cast",
+     "Cast aluminium",
+     "Clean castings, housings"
+    ],
+    [
+     "al-sheet",
+     "Sheet and household",
+     "Sheet, pots, outdoor furniture"
+    ],
+    [
+     "al-wheels",
+     "Alloy wheels",
+     "Tyres off, no chrome or truck wheels"
+    ],
+    [
+     "al-rads",
+     "Aluminium radiators",
+     "Clean, fans off"
+    ],
+    [
+     "al-cans",
+     "Cans",
+     "Drink cans, empty"
+    ],
+    [
+     "al-engines",
+     "Engines with gearboxes",
+     "Drained, whole engines only"
+    ]
+   ]
+  },
+  {
+   "key": "brass",
+   "name": "Brass",
+   "colour": "#C9A84A",
+   "grades": [
+    [
+     "br-clean",
+     "Clean brass",
+     "Taps, fittings, valves, door hardware"
+    ],
+    [
+     "br-irony",
+     "Irony brass",
+     "Brass with steel still attached"
+    ],
+    [
+     "br-rads",
+     "Copper and brass radiators",
+     "Fans and steel off"
+    ]
+   ]
+  },
+  {
+   "key": "steel",
+   "name": "Steel and iron",
+   "colour": "#7A4B32",
+   "grades": [
+    [
+     "st-heavy",
+     "Heavy steel",
+     "Beams, plate, posts, machinery"
+    ],
+    [
+     "st-light",
+     "Light steel",
+     "Roofing, sheet, fencing, star pickets"
+    ],
+    [
+     "st-cast",
+     "Cast iron",
+     "Engine blocks, baths, cast pipe"
+    ],
+    [
+     "st-mixed",
+     "Mixed steel",
+     "Unsorted shed and farm steel"
+    ]
+   ]
+  },
+  {
+   "key": "stainless",
+   "name": "Stainless",
+   "colour": "#8E989F",
+   "grades": [
+    [
+     "ss-304",
+     "Stainless 304",
+     "Sinks, benches, sheet, dairy vats"
+    ],
+    [
+     "ss-316",
+     "Stainless 316",
+     "Marine and food grade"
+    ],
+    [
+     "ss-irony",
+     "Stainless with attachments",
+     "Steel or plastic still on"
+    ]
+   ]
+  },
+  {
+   "key": "lead",
+   "name": "Lead",
+   "colour": "#6C7378",
+   "grades": [
+    [
+     "pb-soft",
+     "Soft lead",
+     "Flashing and sheet lead"
+    ],
+    [
+     "pb-weights",
+     "Wheel weights",
+     "Mixed lead weights"
+    ],
+    [
+     "pb-batt",
+     "Lead-acid batteries",
+     "Car, truck and tractor batteries"
+    ]
+   ]
+  }
+ ],
+ "fees": [
+  [
+   "fee-fridge",
+   "Fridges and freezers",
+   "Gas must come out before recycling"
+  ],
+  [
+   "fee-aircon",
+   "Air-conditioners",
+   "Gas must come out before recycling"
+  ],
+  [
+   "fee-car",
+   "Car bodies",
+   "Drained of fuel, oil and coolant"
+  ],
+  [
+   "fee-mixed",
+   "Items that are part metal",
+   "Desks, chairs, outdoor settings: priced on the metal"
+  ]
+ ]
+}
