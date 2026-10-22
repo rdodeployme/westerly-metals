@@ -106,6 +106,7 @@
       var trip$ = fuel$ + time$;
       var year = n * 12;
       document.getElementById("o-year").textContent = "$" + fmt(trip$ * year);
+      var mini = document.getElementById("o-year-mini"); if (mini) mini.textContent = "$" + fmt(trip$ * year);
       document.getElementById("o-year-cap").textContent = "a year back, at " + n + " load" + (n > 1 ? "s" : "") + " a month from " + t.town;
       document.getElementById("o-km").textContent = fmt(km * year);
       document.getElementById("o-tanks").textContent = fmt(litres * year / 80, 1);
@@ -115,7 +116,10 @@
       document.getElementById("t-fuel").textContent = fmt(litres, 1) + " L · $" + fmt(fuel$);
       document.getElementById("t-timev").textContent = "$" + fmt(time$);
       document.getElementById("t-total").textContent = "$" + fmt(trip$);
-      document.getElementById("o-route").textContent = t.town + " to Moorabool: " + fmt(t.yard_km) + " km. " + t.town + " to Laverton North: " + fmt(t.mel_km) + " km.";
+      var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+      set("o-route", t.town + " to Moorabool: " + fmt(t.yard_km) + " km. " + t.town + " to Laverton North: " + fmt(t.mel_km) + " km.");
+      set("c-us-km", fmt(t.yard_km)); set("c-us-t", mins(t.yard_min) + " one way");
+      set("c-mel-km", fmt(t.mel_km)); set("c-mel-t", mins(t.mel_min) + " one way");
     }
     calc();
   }

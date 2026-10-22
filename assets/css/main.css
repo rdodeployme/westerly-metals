@@ -213,6 +213,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--amber);outline:none}
 .field .hint{font-size:14px;color:var(--muted);margin-top:6px}
 .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
 @media (max-width:420px){.row2{grid-template-columns:minmax(0,1fr)}}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.row3 .field label{white-space:nowrap}
+.row3 input{padding:12px 10px}
 .seg{display:flex;flex-wrap:wrap;gap:8px}
 .seg button{font:700 15px/1 var(--cond);letter-spacing:.08em;text-transform:uppercase;padding:12px 14px;border-radius:var(--r);border:2px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--amber);border-color:var(--ink)}
@@ -233,6 +236,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--amber);outline:none}
 .per-trip td{text-align:right;font-weight:600}
 .per-trip th{font-weight:500;color:#C9CDD0}
 .calc-out .small{margin-top:16px}
+.mini-total{display:none;margin:0;font:700 20px/1.2 var(--cond);letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--bone);border-radius:8px;padding:14px 16px}
+.mini-total b{color:var(--amber);font:400 30px/1 var(--display);margin:0 4px}
+@media (max-width:900px){.calc-out{order:-1;position:static}.mini-total{display:block}}
 
 /* towns table */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
